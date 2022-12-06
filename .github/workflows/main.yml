@@ -64,7 +64,7 @@ jobs:
       - name: Run Trivy vulnerability scanner to notes-app docker image after build
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: $GOGINNOTES_DOCKER_IMAGE
+          image-ref: $GOGINNOTES_DOCKER_IMAGE:${{ github.sha }}
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -79,7 +79,7 @@ jobs:
       - name: Run Trivy vulnerability scanner to postgresql docker image
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: $POSTGRES_DOCKER_IMAGE
+          image-ref: $POSTGRES_DOCKER_IMAGE:${{ github.sha }} 
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
