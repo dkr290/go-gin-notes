@@ -1,0 +1,13 @@
+## rename to config.yaml
+server:
+  port: 8080
+
+database:
+  dbhost: ""
+  dbname:  ""
+  dbuser:  ""
+  dbpassword: ""
+  dbport: ""
+
+EXAMPLE_VAR: "variable from config.yml"
+EXAMPLE_PATH: "path from config.yml"

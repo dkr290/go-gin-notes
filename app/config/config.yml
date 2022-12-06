@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+database:
+  dbhost: "172.28.116.96"
+  dbname:  "notes"
+  dbuser:  "postgres"
+  dbpassword: "Password123"
+  dbport: "32037"
+
+EXAMPLE_VAR: "variable from config.yml"
+EXAMPLE_PATH: "path from config.yml"

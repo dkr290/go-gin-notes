@@ -2,7 +2,8 @@ package middlewares
 
 import (
 	"github.com/dkr290/go-gin-notes/app/models"
-	"github.com/gin-gonic/contrib/sessions"
+	"github.com/gin-contrib/sessions"
+
 	"github.com/gin-gonic/gin"
 )
 
