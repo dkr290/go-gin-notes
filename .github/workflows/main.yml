@@ -55,9 +55,7 @@ jobs:
         run: |
           cd app
           docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile
-          cd ../postgresql
-          docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile
-          docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile_alpine
+       
 
 
 
