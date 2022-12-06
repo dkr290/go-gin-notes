@@ -1,4 +1,4 @@
-name: go-todo-app
+name: go-gin-notes 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
@@ -53,7 +53,7 @@ jobs:
       
       - name: Run OPA Conftest
         run: |
-          cd go-todo-api
+        
           docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile
 
 

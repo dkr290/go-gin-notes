@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 
-	"github.com/dkr290/go-gin-notes/repository"
+	"github.com/dkr290/go-gin-notes/app/repository"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

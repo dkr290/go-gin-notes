@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/dkr290/go-gin-notes/helpers"
-	"github.com/dkr290/go-gin-notes/models"
+	"github.com/dkr290/go-gin-notes/app/helpers"
+	"github.com/dkr290/go-gin-notes/app/models"
 	"github.com/gin-gonic/gin"
 )
 

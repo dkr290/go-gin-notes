@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/dkr290/go-gin-notes/controllers"
-	"github.com/dkr290/go-gin-notes/middlewares"
-	"github.com/dkr290/go-gin-notes/models"
+	"github.com/dkr290/go-gin-notes/app/controllers"
+	"github.com/dkr290/go-gin-notes/app/middlewares"
+	"github.com/dkr290/go-gin-notes/app/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/memstore"
 	"github.com/gin-gonic/gin"

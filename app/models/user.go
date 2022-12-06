@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/dkr290/go-gin-notes/helpers"
+	"github.com/dkr290/go-gin-notes/app/helpers"
 )
 
 type User struct {

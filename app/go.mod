@@ -1,4 +1,4 @@
-module github.com/dkr290/go-gin-notes
+module github.com/dkr290/go-gin-notes/app
 
 go 1.19
 
