@@ -96,6 +96,26 @@ jobs:
             cd postgresql
             docker build . -f Dockerfile -t $POSTGRES_DOCKER_IMAGE
             docker build . -f Dockerfile_alpine -t $ALPINE_IMAGE 
+
+      - name: Run Trivy vulnerability scanner to notes-app docker image after build
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: $GOGINNOTES_DOCKER_IMAGE
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Run Trivy vulnerability scanner to postgresql docker image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: $POSTGRES_DOCKER_IMAGE
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
       
 
       - if: github.event_name != 'pull_request'
