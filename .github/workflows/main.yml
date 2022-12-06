@@ -44,7 +44,7 @@ jobs:
           args: >
             --failOnCVSS 7
             --enableRetired
-            --nodeAuditSkipDevDependencies
+            
       - name: Upload Test results
         uses: actions/upload-artifact@master
         with:
@@ -102,22 +102,20 @@ jobs:
         run: |
           echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           VERSION=${GITHUB_SHA::8}
-          echo GOTODOAPI_DOCKER_IMAGE=$GOTODOAPI_DOCKER_IMAGE
+          echo GOGINNOTES_DOCKER_IMAGE=$GOGINNOTES_DOCKER_IMAGE
           echo VERSION=$VERSION
-          docker tag $GOTODOAPI_DOCKER_IMAGE $GOTODOAPI_DOCKER_IMAGE:$VERSION 
-          docker push $GOTODOAPI_DOCKER_IMAGE:$VERSION
-          docker push $GOTODOAPI_DOCKER_IMAGE
+          docker tag $GOGINNOTES_DOCKER_IMAGE $GOGINNOTES_DOCKER_IMAGE:$VERSION 
+          docker push $GOGINNOTES_DOCKER_IMAGE:$VERSION
+          docker push $GOGINNOTES_DOCKER_IMAGE
           docker tag $POSTGRES_DOCKER_IMAGE $POSTGRES_DOCKER_IMAGE:$VERSION 
           docker push $POSTGRES_DOCKER_IMAGE:$VERSION
           docker push $POSTGRES_DOCKER_IMAGE
           docker tag $ALPINE_IMAGE $ALPINE_IMAGE:$VERSION 
           docker push $ALPINE_IMAGE:$VERSION
           docker push $ALPINE_IMAGE
-          docker tag $VUETODO_DOCKER_IMAGE $VUETODO_DOCKER_IMAGE:$VERSION 
-          docker push $VUETODO_DOCKER_IMAGE:$VERSION
-          docker push $VUETODO_DOCKER_IMAGE
+          
          
-      - name: listt docker images 
+      - name: list docker images 
         run: |
            docker images -a
   # deploy-to-aks-dev:
