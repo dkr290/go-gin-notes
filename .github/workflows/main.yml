@@ -58,6 +58,7 @@ jobs:
 
       - name: Build an image from Dockerfile
         run: |
+          cd app
           docker build -t $GOGINNOTES_DOCKER_IMAGE:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner to notes-app docker image after build
@@ -72,6 +73,7 @@ jobs:
      
       - name: Build an image from Dockerfile
         run: |
+          cd postgresql
           docker build -t  $POSTGRES_DOCKER_IMAGE:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner to postgresql docker image
