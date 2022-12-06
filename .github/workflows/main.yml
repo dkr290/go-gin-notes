@@ -53,8 +53,12 @@ jobs:
       
       - name: Run OPA Conftest
         run: |
-        
+          cd app
           docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile
+          cd ../postgresql
+          docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile
+          docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego  Dockerfile_alpine
+
 
 
   build-docker-images:
@@ -87,7 +91,7 @@ jobs:
 
       - name: Build gin app
         run: |
-           
+            cd app
             docker build . -f Dockerfile -t $GOGINNOTES_DOCKER_IMAGE
       - name: Build Postgresql
         run: |
