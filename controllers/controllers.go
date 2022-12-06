@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/dkr290/go-devops/go-gin-notes/helpers"
-	"github.com/dkr290/go-devops/go-gin-notes/models"
+	"github.com/dkr290/go-gin-notes/helpers"
+	"github.com/dkr290/go-gin-notes/models"
 	"github.com/gin-gonic/gin"
 )
 
