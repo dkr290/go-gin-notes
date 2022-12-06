@@ -1,0 +1,28 @@
+{{ define "notes/index.html" }}
+{{ template "layouts/header.html"}}
+
+    <h1>All Notes</h1>
+
+    <div class="row">
+        {{ with .notes }}
+            {{ range . }}
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ .Name }}</h5>
+              <p class="card-text">{{ .Content }}</p>
+             <a class="btn btn-online-primary" href="/notes/{{ .ID }}" role="button">View</a> 
+             
+            </div>
+          </div>
+        </div>
+        {{ end }}
+        {{ end }}
+       
+      </div>
+
+      <a href="/notes/new" class="btn btn-primary">New Note</a>
+        
+
+    {{ template "layouts/footer.html"}}
+{{ end }}

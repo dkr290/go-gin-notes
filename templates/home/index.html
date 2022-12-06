@@ -1,0 +1,21 @@
+{{ define "home/index.html" }}
+{{ template "layouts/header.html"}}
+
+    <h1>{{ .title }}</h1>
+    <div class="btn-group" role="group">
+         {{ if .logged_in }}
+           <form action="/logout" method="post">
+            <button type="submit" class="btn btn-outline-danger">Logout</button>
+
+           </form>
+         {{ else }}
+            <a class="btn btn-outline-primary" type="button" role="button" href="/login">Login</a>
+            <a class="btn btn-outline-primary" type="button" role="button" href="/signup">Sign Up</a>
+        {{ end }}
+      </div>
+
+    {{ template "layouts/footer.html"}}
+{{ end }}
+
+
+

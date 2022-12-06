@@ -1,0 +1,24 @@
+{{ define "notes/new.html" }}
+{{ template "layouts/header.html"}}
+
+  <form class="row g-3" action="/notes" method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Title</label>
+      <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name">
+      <div id="nameHelp" class="form-text">Title of the note</div>
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+        <label for="content" class="form-label">Content</label>
+      </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+
+
+
+{{ template "layouts/footer.html"}}
+{{ end }}
+
+
+
