@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: go-gin-postgresql    
+  name: go-gin-postgresql
+ 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-gin-postgresql
+  strategy:
+    type: Recreate
+      
+  template:
+    metadata:
+      labels:
+        app: go-gin-postgresql
+        
+    spec:
+      initContainers:
+      - name: take-data-dir-ownership
+        image:  alpine:3.16.2
+        command: ['sh', '-c','chmod 777 /bitnami/postgresql' ]
+
+        
+        volumeMounts:
+        - name: postgresql-data
+          mountPath: "/bitnami/postgresql"
+     
+      containers:
+      - image: ghcr.io/dkr290/go-gin-notes/postgres:latest
+        name: postgresql
+       
+        env:
+        - name: POSTGRESQL_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: db-username
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: db-password
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: postgres-configmap
+              key: db-name
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "0.5"
+          requests:
+            memory: 512Mi
+            cpu: "0.2"
+        volumeMounts:
+        - name: postgresql-data
+          mountPath: "/bitnami/postgresql"
+     
+      restartPolicy: Always
+      volumes:
+      - name: postgresql-data
+        persistentVolumeClaim:
+          claimName: "go-gin-postgresql-data"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-gin-postgresql-svc
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+      protocol: TCP
+  type: ClusterIP
+  selector:
+    app: go-gin-postgresql

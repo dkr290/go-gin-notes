@@ -1,0 +1,16 @@
+## rename to config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-notes-cm
+data:
+  
+  config.yaml: |
+    server:
+      port: 8080
+    database:
+      dbhost: "go-gin-postgresql-svc"
+      dbname:  "notes"
+      dbuser:  "user01"
+      dbpassword: "Password123"
+      dbport: "5432"   

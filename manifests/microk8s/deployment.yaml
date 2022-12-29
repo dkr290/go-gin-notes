@@ -1,96 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: go-gin-postgresql
-    
-  name: go-gin-postgresql
-  namespace: goapps
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: go-gin-postgresql
-  strategy:
-    type: Recreate
-      
-  template:
-    metadata:
-      labels:
-        app: go-gin-postgresql
-        
-    spec:
-      initContainers:
-      - name: take-data-dir-ownership
-        image:  alpine:3.16.2
-        command: ['sh', '-c','chmod 777 /bitnami/postgresql' ]
-
-        
-        volumeMounts:
-        - name: postgresql-data
-          mountPath: "/bitnami/postgresql"
-     
-      containers:
-      - image: postgresql
-        name: postgresql
-       
-        env:
-        - name: POSTGRESQL_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: mlflow-configmap
-              key: DB_USERNAME
-        - name: POSTGRESQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mlflow-secret
-              key: DB_PASSWORD
-        - name: POSTGRESQL_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              name: mlflow-configmap
-              key: DB_NAME
-        resources:
-          limits:
-            memory: "8Gi"
-            cpu: "4"
-          requests:
-            memory: 1024Mi
-            cpu: "0.5"
-        volumeMounts:
-        - name: postgresql-data
-          mountPath: "/bitnami/postgresql"
-      imagePullSecrets:
-      - name: mlflow-pull-0873
-      restartPolicy: Always
-      volumes:
-      - name: postgresql-data
-        persistentVolumeClaim:
-          claimName: "mlflow-postgresql-data"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mlflow-postgresql
-  namespace: mlflow
-  labels:
-    mlflow: mlflow-service
-spec:
-  ports:
-    - name: "5432"
-      port: 5432
-      targetPort: 5432
-      protocol: TCP
-  type: ClusterIP
-  selector:
-    app: mlflow-postgresql
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: go-gin-notes
-  namespace: goapps
   labels:
       app: go-gin-notes
 spec:
@@ -108,48 +19,13 @@ spec:
     spec:
     
       containers:
-        - name: mlflow-tracking-server-pod
+        - name: go-gin-notes
           # The docker image is pulled from dockerhub.
-          image: aabccontainerregistry.azurecr.io/mlflow:__imagetag__
-          imagePullPolicy: Always
-          env: # we extract the values we set in the configmap and mount them as environmen variables in the pods.
-          - name: DEFAULT_ARTIFACT_ROOT
-            valueFrom:
-              configMapKeyRef:
-                name: default-artifact-root
-                key: DEFAULT_ARTIFACT_ROOT
-           
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mlflow-secret
-                key: DB_PASSWORD
-          - name: DB_USERNAME
-            valueFrom:
-              configMapKeyRef:
-                name: mlflow-configmap
-                key: DB_USERNAME
-          - name: DB_URL
-            valueFrom:
-              configMapKeyRef:
-                name: mlflow-configmap
-                key: DB_HOST
-          - name: DB_NAME
-            valueFrom:
-              configMapKeyRef:
-                name: mlflow-configmap
-                key: DB_NAME
-          
-          - name: AZURE_STORAGE_CONNECTION_STRING
-            valueFrom:
-              secretKeyRef:
-                name: aamlflowartifacts-cstring
-                key: AZURE_STORAGE_CONNECTION_STRING
-          - name: AZURE_STORAGE_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: aamlflowartifacts-key
-                key: AZURE_STORAGE_ACCESS_KEY
+          image: docghcr.io/dkr290/go-gin-notes/go-gin-notes:latest
+          imagePullPolicy: Always 
+          volumeMounts:
+          - name: config-volume
+            mountPath: /home/k8s-pipeline/config/    
           resources:
             limits:
               memory: "3Gi"
@@ -157,22 +33,24 @@ spec:
             requests:
               memory: 512Mi
               cpu: "0.5"
-      imagePullSecrets:
-      - name: mlflow-pull-0873
+       volumes:
+       - name: config-volume
+         configMap:
+        # Provide the name of the ConfigMap containing the files you want
+        # to add to the container
+           name: go-notes-cm
+   
     
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: mlflow-tracking-server
-  name: mlflow-tracking-server
-  namespace: mlflow
+  name: go-gin-notes-svc
 spec:
   ports:
   - port: 5000
     protocol: TCP
     targetPort: 5000
   selector:
-    app: mlflow-tracking-server-pods
+    app: go-gin-notes
