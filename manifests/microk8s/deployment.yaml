@@ -33,12 +33,12 @@ spec:
             requests:
               memory: 512Mi
               cpu: "0.5"
-       volumes:
-       - name: config-volume
-         configMap:
+      volumes:
+      - name: config-volume
+        configMap:
         # Provide the name of the ConfigMap containing the files you want
         # to add to the container
-           name: go-notes-cm
+          name: go-notes-cm
    
     
 
