@@ -5,8 +5,8 @@ on:
   push:
     branches: [ "main" ]
     paths-ignore:
-    - './argocd/**'
-    - './manifests/**'
+    - 'argocd/**'
+    - 'manifests/**'
   #    - '.github/**'
   pull_request:
     branches: [ "main" ]
