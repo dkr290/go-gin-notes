@@ -4,7 +4,9 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
-  #  paths-ignore:
+    paths-ignore:
+    - './argocd/**'
+    - './manifests/**'
   #    - '.github/**'
   pull_request:
     branches: [ "main" ]

@@ -21,7 +21,7 @@ spec:
       containers:
         - name: go-gin-notes
           # The docker image is pulled from dockerhub.
-          image: docghcr.io/dkr290/go-gin-notes/go-gin-notes:latest
+          image: ghcr.io/dkr290/go-gin-notes/go-gin-notes:latest
           imagePullPolicy: Always 
           volumeMounts:
           - name: config-volume
