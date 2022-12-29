@@ -1,1 +1,1 @@
-FROM postgres:12-bullseye
+FROM bitnami/postgresql
