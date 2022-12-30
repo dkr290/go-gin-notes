@@ -23,8 +23,8 @@ RUN addgroup -S pipeline && adduser -S k8s-pipeline -G pipeline
 
 WORKDIR /home/k8s-pipeline
 COPY --from=builder /build/notes-api .
-COPY --from=builder /build/templates/* templates/
-COPY --from=builder /build/static/* static/
+COPY --from=builder /build/templates ./templates
+COPY --from=builder /build/static ./static
 RUN ls -l
 
 USER k8s-pipeline
